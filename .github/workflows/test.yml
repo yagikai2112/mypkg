@@ -3,7 +3,7 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-24.04
-    container: Kaito Yagiuchi/ubuntu24.04-ros2:latest
+    container: yagisan/ubuntu24.04-ros2:latest
     steps:
       - uses: actions/checkout@v2
       - name: build and test

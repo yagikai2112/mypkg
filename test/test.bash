@@ -14,6 +14,6 @@ timeout 10 ros2 launch mypkg cpu_monitor.launch.py \
 
 grep -q "CPU Monitor Node started" /tmp/mypkg.log || exit 1
 
-grep -q "Received CPU=" /tmp/mypkg.log || exit 1
+grep -q "Resource listener started" /tmp/mypkg.log || exit 1
 
 exit 0

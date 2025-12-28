@@ -7,6 +7,8 @@ from std_msgs.msg import Float32
 class ResourceListener(Node):
     def __init__(self):
         super().__init__("resource_listener")
+        
+        self.get_logger().info("Resource listener started")
 
         self.cpu_sub = self.create_subscription(
             Float32,

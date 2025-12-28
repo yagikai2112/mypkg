@@ -9,10 +9,9 @@ setup(
     version='0.0.0',
     packages=find_packages(exclude=['test']),
     data_files=[
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
-        ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name), glob('launch/*.launch.py'))
+    ("share/ament_index/resource_index/packages", ["resource/mypkg"]),
+    ("share/mypkg", ["package.xml"]),
+    ("share/mypkg/launch", ["launch/cpu_monitor.launch.py"]),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -27,8 +26,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'talker = mypkg.talker:main',
-            'listener = mypkg.listener:main',
+            'cpu_monitor = mypkg.cpu_monitor_node:main',
+            'resource_listener = mypkg.resource_listener:main',
         ],
     },
 )

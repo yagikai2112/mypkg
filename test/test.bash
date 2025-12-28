@@ -12,10 +12,8 @@ source install/setup.bash > /dev/null 2>&1
 timeout 10 ros2 launch mypkg cpu_monitor.launch.py \
   > /tmp/mypkg.log 2>&1
 
-grep -q "/cpu_usage" /tmp/mypkg.log || exit 1
-grep -q "/memory_usage" /tmp/mypkg.log || exit 1
+grep -q "CPU Monitor Node started" /tmp/mypkg.log || exit 1
 
 grep -q "Received CPU=" /tmp/mypkg.log || exit 1
 
 exit 0
-

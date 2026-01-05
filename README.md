@@ -5,38 +5,45 @@
 ## CPU,メモリ使用率チェッカー
 本パッケージは、CPU 使用率およびメモリ使用率を ROS 2 のトピックとして配信することで、他ノードからシステム負荷を監視できるようにすることを目的としています。
 
-## 提供するノード
+## ノードとトピック
 
-### cpu_monitor ノード
+### ノード一覧
+#### /cpu_monitor
 - OS 全体の CPU 使用率およびメモリ使用率を定期的に取得します。
-- 取得した値を以下のトピックとして配信します。
+- 取得した値をros2のトピックとして配信します。
 
-### resource_listener ノード
+#### /resource_listener
 - cpu_monitor ノードが配信するトピックを購読します。
 - 受信した CPU 使用率・メモリ使用率をログとして表示します。
+
+### トピック一覧
+#### /cpu_usage
+- CPU 使用率を配信するためのトピックです。  
+- 型----std_msgs/msg/Float32  
+- 発行するノード----/cpu_monitor  
+- 購読するノード----/resource_listener  
+- 配信される値----システム全体の CPU 使用率（％）  
+#### /memory_usage  
+- メモリ使用率を配信するためのトピックです。  
+- 型----std_msgs/msg/Float32  
+- 発行するノード----/cpu_monitor  
+- 購読するノード----/resource_listener  
+- 配信される値----システム全体のメモリ使用率（％）  
 
 ## テスト環境  
 - Ubuntu-22.04  
 - ROS 2: Humble  
 - Python version: 3.10  
 
-## テストに利用するコンテナについて
-本パッケージの GitHub Actions によるテストでは、ryuichiueda に由来する Docker コンテナ環境を、GitHub Actions 上でダウンロードして使用しています。
-
-## 使用方法
-以下のコマンドを実行し，ROS 2 のワークスペースの
-src ディレクトリ内で mypkg をダウンロードしてビルドしてください。  
+## ダウンロード
+以下のコマンドを実行し，mypkg をダウンロードしてください。  
 ```
-$ cd ~/ros2_ws/src
 $ git clone https://github.com/yagikai2112/mypkg.git
-$ cd ~/ros2_ws
-$ colcon build
-$ source install/setup.bash
 ```
 
 ## 実行方法  
 launch ファイルにより，CPU 使用率・メモリ使用率を取得するノードと，
-それらを購読するリスナーノードが同時に起動します。  
+それらを購読するリスナーノードを同時に起動します。  
 ```
 $ ros2 launch mypkg cpu_monitor.launch.py
 ```
@@ -47,16 +54,6 @@ $ ros2 launch mypkg cpu_monitor.launch.py
 [resource_listener-2] [INFO] [1766940375.406579690] [resource_listener]: Memory Usage: 9.5 %
 [resource_listener-2] [INFO] [1766940376.406089801] [resource_listener]: CPU Usage: 0.1 %
 [resource_listener-2] [INFO] [1766940376.406655520] [resource_listener]: Memory Usage: 9.5 %
-```
-
-## test
-CI 用に test.bash を用意しており，以下を確認しています。  
-- colcon build が正常に終了すること  
-- ros2 launch がエラーなく起動すること  
-- CPU・メモリ情報がログに出力されていること  
-手動でテストを実行する場合は，以下を実行します。  
-```
-$ test/test.bash
 ```
 
 ## 補足
